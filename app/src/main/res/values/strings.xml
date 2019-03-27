@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Finger Paint</string>
+    <string name="color_picker">Color Picker</string>
+</resources>
