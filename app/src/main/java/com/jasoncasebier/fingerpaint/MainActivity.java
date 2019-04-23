@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
                 dv.removeImage();
                 return true;
             case 3:
-                dv.setDrawingCacheEnabled(true);
+                 dv.setDrawingCacheEnabled(true);
                 dv.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
                 Bitmap bitmap = dv.getDrawingCache();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss",
@@ -262,7 +262,11 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
                 Date date = new Date();
                 String filename = "Painting_" + dateFormat.format(date) + ".jpg";
                 String filepath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                        File.separator + "DCIM";
+                        File.separator + "DCIM" + File.separator + "Painter";
+                File dir = new File(filepath);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
                 File file = new File(filepath + File.separator + filename);
                 FileOutputStream fileOutputStream;
                 try {
