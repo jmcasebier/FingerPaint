@@ -2,14 +2,10 @@ package com.jasoncasebier.fingerpaint;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
@@ -27,9 +23,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -94,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
         super.onCreateOptionsMenu(menu);
 
         menu.add(0, 0, 0, "Color");
-        menu.add(0, 1, 0, "Open");
+        menu.add(0, 4, 0, "Rainbow");
         menu.add(0, 2, 0, "Clear");
         menu.add(0, 3, 0, "Save");
 
@@ -243,15 +237,8 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
                             }
                         });
                 return true;
-            case 1:
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Image"), 1);
-                return true;
             case 2:
                 dv.clearAll();
-                dv.removeImage();
                 return true;
             case 3:
                 dv.setDrawingCacheEnabled(true);
@@ -280,6 +267,8 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
                 }
                 dv.setDrawingCacheEnabled(false);
                 return true;
+            case 4:
+                dv.setRainbow();
         }
 
         return super.onOptionsItemSelected(item);
@@ -298,23 +287,5 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         // onStopTrackingTouch
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == 1) {
-                dv.clearAll();
-                Uri imageUri = data.getData();
-                Drawable image;
-                try {
-                    InputStream inputStream = getContentResolver().openInputStream(imageUri);
-                    image = Drawable.createFromStream(inputStream, imageUri.toString());
-                    dv.loadImage(image);
-                } catch (FileNotFoundException e) {
-                    Log.i("OPEN_ERROR", e.getMessage());
-                }
-            }
-        }
     }
 }
