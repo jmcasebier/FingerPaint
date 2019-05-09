@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
         super.onCreateOptionsMenu(menu);
 
         menu.add(0, 0, 0, "Color");
-        menu.add(0, 4, 0, "Rainbow");
+        menu.add(0, 1, 0, "Rainbow");
         menu.add(0, 2, 0, "Clear");
         menu.add(0, 3, 0, "Save");
 
@@ -237,6 +237,8 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
                             }
                         });
                 return true;
+            case 1:
+                dv.setRainbow();
             case 2:
                 dv.clearAll();
                 return true;
@@ -271,8 +273,6 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
                 }
                 dv.setDrawingCacheEnabled(false);
                 return true;
-            case 4:
-                dv.setRainbow();
         }
 
         return super.onOptionsItemSelected(item);
