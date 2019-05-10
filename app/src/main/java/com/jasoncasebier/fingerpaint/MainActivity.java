@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
         super.onCreateOptionsMenu(menu);
 
         menu.add(0, 0, 0, "Color");
-        menu.add(0, 1, 0, "Rainbow");
         menu.add(0, 2, 0, "Clear");
         menu.add(0, 3, 0, "Save");
 
@@ -236,14 +235,20 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
                                 colorPickerDialog.dismiss();
                             }
                         });
+                colorPickerDialog.findViewById(R.id.rainbowColor).
+                        setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dv.setRainbow();
+                                colorPickerDialog.dismiss();
+                            }
+                        });
                 return true;
-            case 1:
-                dv.setRainbow();
             case 2:
                 dv.clearAll();
                 return true;
             case 3:
-                 dv.setDrawingCacheEnabled(true);
+                dv.setDrawingCacheEnabled(true);
                 dv.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
                 Bitmap bitmap = dv.getDrawingCache();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss",

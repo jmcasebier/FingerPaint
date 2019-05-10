@@ -99,11 +99,10 @@ public class DrawingView extends View {
         super.onDraw(canvas);
 
         paint.setAntiAlias(true);
-
         paint.setStyle(Paint.Style.STROKE);
-        paint.setDither(true);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setDither(true);
 
         for (PaintPath paintPath : paths) {
             paint.setColor(paintPath.color);
@@ -152,7 +151,11 @@ public class DrawingView extends View {
         if (moveX >= TOUCH_TOLERANCE || moveY >= TOUCH_TOLERANCE) {
             if (isRainbow) {
                 this.color = rainbowColors.get(getColorIndex());
-                startPath(pathX, pathY);
+                path = new Path();
+                paintPath = new PaintPath(color, strokeWidth, path);
+                paths.add(paintPath);
+                path.reset();
+                path.moveTo(pathX, pathY);
             }
             path.quadTo(pathX, pathY, (x + pathX)/2, (y + pathY)/2);
             pathX = x;
@@ -160,7 +163,9 @@ public class DrawingView extends View {
         }
     }
 
-    private void endPath() { path.lineTo(pathX, pathY); }
+    private void endPath() {
+        path.lineTo(pathX, pathY);
+    }
 
     public void undoLast() {
         if (paths.size() > 0) {
@@ -179,6 +184,9 @@ public class DrawingView extends View {
     }
 
     public void setCurrentColor(int color) {
+        if (isRainbow) {
+            isRainbow = !isRainbow;
+        }
         this.color = color;
     }
 
